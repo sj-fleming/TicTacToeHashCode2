@@ -1,0 +1,15 @@
+ooxxxooxo
+     xxoo
+ooxx
+   xxxoo 
+   o oxxx
+invalid
+
+xxooxxoox
+oxooxxxox
+    xxooo
+xxoooxxox
+x x x oo 
+  x xox o
+123039908
+oxoxoxoooooxx
