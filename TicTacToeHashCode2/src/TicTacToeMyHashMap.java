@@ -21,8 +21,15 @@ public class TicTacToeMyHashMap  {
 	 * total number of winners in the winners text file
 	 */
 	public final int NUM_WINNERS = 1400;
+	/*
+	 * capacity of the winners hash map (200 more than winners)
+	 */
 	public final static int CAPACITY = 1600;
 
+	
+	/*
+	 * instantiates and fills the hash map of winners by reading the winners text
+	 */
    TicTacToeMyHashMap() {
 	   //Instantiate/fill HashMap ... pay attention to initial capacity and load values
 	   //initial capacity set to twice the number of expected values
@@ -48,6 +55,13 @@ public class TicTacToeMyHashMap  {
 // You should be able to update this with your information and determine 
 // Information about capacity (different than size()) and what is stored in the cells
 
+   
+   /**
+    * returns the maximum number of elements the hash map can hold
+ * @return the capacity of the winners hash map
+ * @throws NoSuchFieldException if the "table" field can't be found
+ * @throws IllegalAccessException if there is not access to the HashMap class
+ */
    private int capacity() throws NoSuchFieldException, IllegalAccessException {
       Field tableField = HashMap.class.getDeclaredField("table");
       tableField.setAccessible(true);
@@ -60,6 +74,9 @@ public class TicTacToeMyHashMap  {
    // note - if an entry is not null, then it has a value, it may have more than one value
    // see if you can determine how many values it has.  Using the debugger will assist.
    
+   /*
+    * prints the number of entries, elements, chains, load factor, average chain length, maximum chain length, number of entries in each quarter, and number of collisions in each tenth
+    */
    public static void report() throws IllegalArgumentException, IllegalAccessException, NoSuchFieldException, SecurityException {
 	   Field tableField = HashMap.class.getDeclaredField("table");
 	   tableField.setAccessible(true);
@@ -138,7 +155,11 @@ public class TicTacToeMyHashMap  {
 	   System.out.println("\tNumber of collisions in each tenth: " + tenths.substring(0, tenths.length() -2));
    }
    
-   @Override
+   /**
+    * gets the board string (the key) and calculates the index/hash code ( adds up : character value * 3^index for each index)
+ * @return the hash code for the particular board
+ */
+@Override
    public int hashCode() {
 	   int hash = 0;
 	   Field key = null;
@@ -152,7 +173,6 @@ public class TicTacToeMyHashMap  {
 		e.printStackTrace();
 	}
 	   String s = "" + key;
-	  
 		for(int i = 0; i < s.length(); i++) {
 				if (s.charAt(i) == 'x')
 					hash += 1 * (int) (Math.pow(3, i));
@@ -161,7 +181,6 @@ public class TicTacToeMyHashMap  {
 				else
 					hash += 0;
 		}
-	  
 	   return hash % NUM_WINNERS;
    }
 

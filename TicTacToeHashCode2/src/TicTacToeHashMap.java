@@ -9,6 +9,10 @@ import java.util.Scanner;
  * TicTacToeHashMap part C version 2
  */
 
+/**
+ * @author sarah
+ *
+ */
 public class TicTacToeHashMap  {
 
 	//Define a hash map to store the winning strings as Key and true as Value
@@ -21,8 +25,14 @@ public class TicTacToeHashMap  {
 	 * total number of winners in the winners text file
 	 */
 	public final int NUM_WINNERS = 1400;
+	/*
+	 * capacity of the winners hash map (200 more than winners)
+	 */
 	public final static int CAPACITY = 1600;
 
+	/*
+	 * instantiates and fills the hash map of winners by reading the winners text
+	 */
    TicTacToeHashMap() {
 	   //Instantiate/fill HashMap ... pay attention to initial capacity and load values
 	   //initial capacity set to twice the number of expected values
@@ -48,18 +58,27 @@ public class TicTacToeHashMap  {
 // You should be able to update this with your information and determine 
 // Information about capacity (different than size()) and what is stored in the cells
 
-   private int capacity() throws NoSuchFieldException, IllegalAccessException {
+   /**
+    * returns the maximum number of elements the hash map can hold
+ * @return the capacity of the winners hash map
+ * @throws NoSuchFieldException if the "table" field can't be found
+ * @throws IllegalAccessException if there is not access to the HashMap class
+ */
+private int capacity() throws NoSuchFieldException, IllegalAccessException {
       Field tableField = HashMap.class.getDeclaredField("table");
       tableField.setAccessible(true);
       Object[] table = (Object[]) tableField.get(winnersMap);
       return table == null ? 0 : table.length;   
    }
    
-   // TODO using the same code to get the table of entries as in the capacity method,
+   // using the same code to get the table of entries as in the capacity method,
    // create a method that will evaluate the table as directed in the assignment.
    // note - if an entry is not null, then it has a value, it may have more than one value
    // see if you can determine how many values it has.  Using the debugger will assist.
    
+/*
+ * prints the number of entries, elements, chains, load factor, average chain length, maximum chain length, number of entries in each quarter, and number of collisions in each tenth
+ */
    public static void report() throws IllegalArgumentException, IllegalAccessException, NoSuchFieldException, SecurityException {
 	   Field tableField = HashMap.class.getDeclaredField("table");
 	   tableField.setAccessible(true);
