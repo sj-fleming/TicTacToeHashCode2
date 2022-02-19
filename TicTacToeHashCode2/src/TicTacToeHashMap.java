@@ -43,7 +43,7 @@ public class TicTacToeHashMap  {
    
    }
 
-// TODO This method uses reflect to investigate the objects inside the HashMap
+// This method uses reflect to investigate the objects inside the HashMap
 // You should be able to update this with your information and determine 
 // Information about capacity (different than size()) and what is stored in the cells
 
@@ -63,6 +63,7 @@ public class TicTacToeHashMap  {
 	   Field tableField = HashMap.class.getDeclaredField("table");
 	   tableField.setAccessible(true);
 	   Object[] table = (Object[]) tableField.get(winnersMap);
+	   Field[] allFields = Object.class.getDeclaredFields();
 //	   for(Object obj: table) {
 //		   if(obj != null)
 //			   System.out.println(obj.getClass()); //class java.util.HashMap$Node
@@ -72,6 +73,9 @@ public class TicTacToeHashMap  {
 	   //number of entries stored in the table
 	   int numEntries = 0;
 	   int numElements = 0;
+	   int numChains = 0; //if size > 1
+	   int maxChainLength = 0;
+	   int numChainedElements = 0;
 	   
 	   //load factor
 	   
@@ -81,12 +85,25 @@ public class TicTacToeHashMap  {
 	   
 	   //average chain length
 	   
-	   for (int i = 0; i < table.length; i++) {
-		   if (table[i] != null) {
-			   numEntries++;
-		   }
-		   
-	   }
+//	   for (int i = 0; i < table.length; i++) {
+		  // HashMap<?, ?> map = table[i];
+		
+//		   if (table[i] != null && !map.isEmpty()) {
+//			   numEntries++;
+//			   numElements += map.size();
+//			   if (map.size() > 1) {
+//				   numChains++;
+//				   numChainedElements += map.size();
+//			   }
+//			   if (map.size() > maxChainLength)
+//				   maxChainLength = map.size();
+//		   }   
+//	   }
+	   System.out.println("Number of entries: " + numEntries);
+	   System.out.println("Number of elements: " + numElements);
+	   System.out.println("Load factor: " + numElements/numChains);
+	   System.out.println("Average chain length: " + numChainedElements/numChains);
+	   System.out.println("Maximum chain length: " + maxChainLength);
 	   
    }
 
