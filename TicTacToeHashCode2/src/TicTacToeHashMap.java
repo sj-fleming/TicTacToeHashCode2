@@ -63,12 +63,11 @@ public class TicTacToeHashMap  {
 	   Field tableField = HashMap.class.getDeclaredField("table");
 	   tableField.setAccessible(true);
 	   Object[] table = (Object[]) tableField.get(winnersMap);
-	   Field[] allFields = Object.class.getDeclaredFields();
+	   
 //	   for(Object obj: table) {
 //		   if(obj != null)
 //			   System.out.println(obj.getClass()); //class java.util.HashMap$Node
 //	   }
-
 	   
 	   //number of entries stored in the table
 	   int numEntries = 0;
@@ -85,8 +84,24 @@ public class TicTacToeHashMap  {
 	   
 	   //average chain length
 	   
-//	   for (int i = 0; i < table.length; i++) {
-		  // HashMap<?, ?> map = table[i];
+	  
+	   
+	   for (Object obj : table) {
+		   if (obj != null) {
+			   numEntries++;
+			   numElements++;
+			   Object map = obj;
+			   Field next = map.getClass().getDeclaredField("next");
+			   next.setAccessible(true);
+			   while(obj != null) {
+				   obj = next.get(obj);
+				   if (obj != null)
+					   numElements++;
+			   }
+		   }
+		   
+		   
+//		   HashMap.Node<?, ?> map = table[i];
 		
 //		   if (table[i] != null && !map.isEmpty()) {
 //			   numEntries++;
@@ -98,12 +113,12 @@ public class TicTacToeHashMap  {
 //			   if (map.size() > maxChainLength)
 //				   maxChainLength = map.size();
 //		   }   
-//	   }
-	   System.out.println("Number of entries: " + numEntries);
-	   System.out.println("Number of elements: " + numElements);
-	   System.out.println("Load factor: " + numElements/numChains);
-	   System.out.println("Average chain length: " + numChainedElements/numChains);
-	   System.out.println("Maximum chain length: " + maxChainLength);
+	   }
+	   System.out.println("\tNumber of entries: " + numEntries);
+	   System.out.println("\tNumber of elements: " + numElements);
+	   System.out.println("\tLoad factor: " + numElements/numChains);
+	   System.out.println("\tAverage chain length: " + numChainedElements/numChains);
+	   System.out.println("\tMaximum chain length: " + maxChainLength);
 	   
    }
 
