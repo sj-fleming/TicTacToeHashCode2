@@ -9,7 +9,7 @@ import java.util.Scanner;
  * TicTacToeHashMap part C version 2
  */
 
-public class TicTacToeHashMap  {
+public class TicTacToeMyHashMap  {
 
 	//Define a hash map to store the winning strings as Key and true as Value
 	public static HashMap<String, Boolean> winnersMap;
@@ -23,7 +23,7 @@ public class TicTacToeHashMap  {
 	public final int NUM_WINNERS = 1400;
 	public final static int CAPACITY = 1600;
 
-   TicTacToeHashMap() {
+   TicTacToeMyHashMap() {
 	   //Instantiate/fill HashMap ... pay attention to initial capacity and load values
 	   //initial capacity set to twice the number of expected values
 	   winnersMap = new HashMap<String, Boolean>(CAPACITY); 
@@ -55,7 +55,7 @@ public class TicTacToeHashMap  {
       return table == null ? 0 : table.length;   
    }
    
-   // TODO using the same code to get the table of entries as in the capacity method,
+   // using the same code to get the table of entries as in the capacity method,
    // create a method that will evaluate the table as directed in the assignment.
    // note - if an entry is not null, then it has a value, it may have more than one value
    // see if you can determine how many values it has.  Using the debugger will assist.
@@ -137,13 +137,40 @@ public class TicTacToeHashMap  {
 	   System.out.println("\tNumber of entries in each quarter: " + quarters.substring(0, quarters.length() -2));
 	   System.out.println("\tNumber of collisions in each tenth: " + tenths.substring(0, tenths.length() -2));
    }
+   
+   @Override
+   public int hashCode() {
+	   int hash = 0;
+	   Field key = null;
+	   try {
+		key = this.getClass().getDeclaredField("key");
+	} catch (NoSuchFieldException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	} catch (SecurityException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	   String s = "" + key;
+	  
+		for(int i = 0; i < s.length(); i++) {
+				if (s.charAt(i) == 'x')
+					hash += 1 * (int) (Math.pow(3, i));
+				else if (s.charAt(i) == 'o')
+					hash += 2 * (int) (Math.pow(3, i));
+				else
+					hash += 0;
+		}
+	  
+	   return hash % NUM_WINNERS;
+   }
 
    public static void main(String[] args) throws java.io.FileNotFoundException,
                                               NoSuchFieldException, 
                                               IllegalAccessException {
 
 	 //read in and store the strings in your hash map, then close the file (done in constructor)
-      TicTacToeHashMap m = new TicTacToeHashMap();
+      TicTacToeMyHashMap m = new TicTacToeMyHashMap();
       
   //print out the capacity using the capacity() method
       System.out.println("Capacity: " + m.capacity());
