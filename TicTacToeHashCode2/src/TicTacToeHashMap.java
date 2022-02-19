@@ -93,11 +93,19 @@ public class TicTacToeHashMap  {
 			   Object map = obj;
 			   Field next = map.getClass().getDeclaredField("next");
 			   next.setAccessible(true);
+			   if (next.get(obj) != null)
+				   numChains++; //if the chain is > 1
+			   int chainLength = 1;
 			   while(obj != null) {
 				   obj = next.get(obj);
-				   if (obj != null)
+				   if (obj != null) {
 					   numElements++;
+					   numChainedElements++;
+					   chainLength++;
+				   }
 			   }
+			   if (chainLength > maxChainLength)
+				   maxChainLength = chainLength;
 		   }
 		   
 		   
@@ -116,7 +124,8 @@ public class TicTacToeHashMap  {
 	   }
 	   System.out.println("\tNumber of entries: " + numEntries);
 	   System.out.println("\tNumber of elements: " + numElements);
-	   System.out.println("\tLoad factor: " + numElements/numChains);
+	   System.out.println("\tNumber of chains: " + numChains);
+	   System.out.println("\tLoad factor: " + (double)numElements/numChains);
 	   System.out.println("\tAverage chain length: " + numChainedElements/numChains);
 	   System.out.println("\tMaximum chain length: " + maxChainLength);
 	   
