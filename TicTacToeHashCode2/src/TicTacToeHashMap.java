@@ -82,8 +82,8 @@ public class TicTacToeHashMap  {
 	   int numChainedElements = 0;
 	   int index1 = 0;
 	   int index2 = 0;
-	   int qtr = CAPACITY/4;
-	   int tenth = CAPACITY/10;
+	   int qtr = table.length/4;
+	   int tenth = table.length/10;
 	   String quarters = "";
 	   String tenths = "";
 	   int qtrCount = 0;
@@ -115,14 +115,14 @@ public class TicTacToeHashMap  {
 				   maxChainLength = chainLength;
 		   }
 		   index1++;
-		   if (index1 > qtr) {
+		   if (index1 == qtr) {
 			   quarters += qtrCount + ", ";
 			   qtrCount = 0;
 			   index1 = 0;
 		   }  
 		   
 		   index2++;
-		   if (index2 > tenth) {
+		   if (index2 == tenth) {
 			   tenths += tenthCount + ", ";
 			   tenthCount = 0;
 			   index2 = 0;
