@@ -21,11 +21,12 @@ public class TicTacToeHashMap  {
 	 * total number of winners in the winners text file
 	 */
 	public final int NUM_WINNERS = 1400;
+	public final static int CAPACITY = 1600;
 
    TicTacToeHashMap() {
 	   //Instantiate/fill HashMap ... pay attention to initial capacity and load values
 	   //initial capacity set to twice the number of expected values
-	   winnersMap = new HashMap<String, Boolean>(NUM_WINNERS * 2); 
+	   winnersMap = new HashMap<String, Boolean>(CAPACITY); 
    
    		// read in winners file and fill winners array
 		File file = new File(winnersFile);
@@ -70,19 +71,23 @@ public class TicTacToeHashMap  {
 //	   }
 	   
 	   //number of entries stored in the table
+	   //load factor  
+	   //number of entries in each quarter
+	   //number of collisions in each tenth
+	   //average chain length
 	   int numEntries = 0;
 	   int numElements = 0;
 	   int numChains = 0; //if size > 1
 	   int maxChainLength = 0;
 	   int numChainedElements = 0;
-	   
-	   //load factor
-	   
-	   //number of entries in each quarter
-	   
-	   //number of collisions in each tenth
-	   
-	   //average chain length
+	   int index1 = 0;
+	   int index2 = 0;
+	   int qtr = CAPACITY/4;
+	   int tenth = CAPACITY/10;
+	   String quarters = "";
+	   String tenths = "";
+	   int qtrCount = 0;
+	   int tenthCount = 0;
 	   
 	  
 	   
@@ -90,6 +95,7 @@ public class TicTacToeHashMap  {
 		   if (obj != null) {
 			   numEntries++;
 			   numElements++;
+			   qtrCount++;
 			   Object map = obj;
 			   Field next = map.getClass().getDeclaredField("next");
 			   next.setAccessible(true);
@@ -102,25 +108,25 @@ public class TicTacToeHashMap  {
 					   numElements++;
 					   numChainedElements++;
 					   chainLength++;
+					   tenthCount++;
 				   }
 			   }
 			   if (chainLength > maxChainLength)
 				   maxChainLength = chainLength;
 		   }
+		   index1++;
+		   if (index1 > qtr) {
+			   quarters += qtrCount + ", ";
+			   qtrCount = 0;
+			   index1 = 0;
+		   }  
 		   
-		   
-//		   HashMap.Node<?, ?> map = table[i];
-		
-//		   if (table[i] != null && !map.isEmpty()) {
-//			   numEntries++;
-//			   numElements += map.size();
-//			   if (map.size() > 1) {
-//				   numChains++;
-//				   numChainedElements += map.size();
-//			   }
-//			   if (map.size() > maxChainLength)
-//				   maxChainLength = map.size();
-//		   }   
+		   index2++;
+		   if (index2 > tenth) {
+			   tenths += tenthCount + ", ";
+			   tenthCount = 0;
+			   index2 = 0;
+		   }
 	   }
 	   System.out.println("\tNumber of entries: " + numEntries);
 	   System.out.println("\tNumber of elements: " + numElements);
@@ -128,7 +134,8 @@ public class TicTacToeHashMap  {
 	   System.out.println("\tLoad factor: " + (double)numElements/numChains);
 	   System.out.println("\tAverage chain length: " + numChainedElements/numChains);
 	   System.out.println("\tMaximum chain length: " + maxChainLength);
-	   
+	   System.out.println("\tNumber of entries in each quarter: " + quarters.substring(0, quarters.length() -2));
+	   System.out.println("\tNumber of collisions in each tenth: " + tenths.substring(0, tenths.length() -2));
    }
 
    public static void main(String[] args) throws java.io.FileNotFoundException,
